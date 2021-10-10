@@ -63,8 +63,11 @@ main {
 .bar div {
     width: 0.8em;
     height: 50vh;
-    border: 0.03125em solid #222831;
     background-color: #222831;
+}
+
+.bar div:hover {
+    background-color: red;
 }
 
 
