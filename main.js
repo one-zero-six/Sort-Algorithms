@@ -1,38 +1,64 @@
 function randomList(length) {
-    let newList = []
+    let newList = [];
 
     while (true) {
-        let num = Math.floor(Math.random() * length) + 10
+        let num = (Math.random() * 50) + 1;
+
         if (!newList.includes(num)) {
-            newList.push(num)
+            newList.push(num);
         }
+
         if (newList.length === length) {
-            break
+            return newList;
         }
     }
-    return newList
 }
 
+function updateColumnNumber() {
+    const bar = document.querySelectorAll('.bar')
 
-function bubbleSort(list) {
+    for (let i = 0; i < bar.length; i++) {
+        bar[i].style.height = `${list[i]}vh`
+    }
+}
+
+function bubbleSort() {
     for (let i = 0; i < list.length; i++) {
         for (let index = 0; index < list.length - i - 1; index++) {
 
             if (list[index] > list[index + 1]) {
-                let large = list[index]
-                let small = list[index + 1]
+                let large = list[index];
+                let small = list[index + 1];
 
-                list[index] = small
-                list[index + 1] = large
+                list[index] = small;
+                list[index + 1] = large;
             }
+
+
+            updateColumnNumber()
         }
     }
 }
 
+function rezising() {
+    list = randomList(Math.floor(visualViewport.width / 7));
 
-const myList = randomList(40)
-console.log(myList)
+    let container = document.querySelector('main')
+    container.innerHTML = ''
 
-const sorted = bubbleSort(myList)
 
-console.log(myList)
+    for (let i = 0; i < list.length; i++) {
+        const div = document.createElement('div')
+        div.classList.add('bar')
+        container.append(div)
+    }
+    updateColumnNumber()
+}
+
+let list = []
+
+visualViewport.addEventListener('resize', rezising)
+
+rezising();
+
+document.querySelectorAll('p')[2].addEventListener('click', bubbleSort);

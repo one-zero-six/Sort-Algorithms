@@ -34,9 +34,9 @@ nav img {
 }
 
 main {
-    height: 90vh;
+    height: 85vh;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: flex-end;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -50,24 +50,34 @@ main {
     align-content: center;
     justify-content: flex-end;
     align-items: center;
-}
-
-.bar p {
-    /* background-color: #393E46; */
-    font-size: 0.8em;
-    border-top: 1px solid white;
-    min-width: 1em;
-    text-align: center;
-}
-
-.bar div {
-    width: 0.8em;
+    
+    width: 5px;
+    margin: 0 1px;
     height: 50vh;
     background-color: #222831;
+    transition: height 1s, transform 1s;
 }
 
-.bar div:hover {
-    background-color: red;
+
+
+.bar:hover {
+    background-color: #FF2E63;
+}
+
+.time {
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: flex-end;
+    border-top: 1px solid #EEEEEE;
+}
+
+.time p {
+    font-size: 0.9em;
+    font-variant: small-caps;
 }
 
 
