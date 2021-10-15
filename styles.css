@@ -55,7 +55,7 @@ main {
     margin: 0 1px;
     height: 50vh;
     background-color: #222831;
-    transition: height 1s, transform 1s;
+    transition: all .5s ease-in-out;
 }
 
 

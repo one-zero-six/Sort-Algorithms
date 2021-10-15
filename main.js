@@ -1,64 +1,36 @@
-function randomList(length) {
-    let newList = [];
-
-    while (true) {
-        let num = (Math.random() * 50) + 1;
-
-        if (!newList.includes(num)) {
-            newList.push(num);
-        }
-
-        if (newList.length === length) {
-            return newList;
-        }
-    }
-}
-
-function updateColumnNumber() {
-    const bar = document.querySelectorAll('.bar')
-
-    for (let i = 0; i < bar.length; i++) {
-        bar[i].style.height = `${list[i]}vh`
-    }
-}
-
 function bubbleSort() {
-    for (let i = 0; i < list.length; i++) {
-        for (let index = 0; index < list.length - i - 1; index++) {
+    const columns = document.querySelectorAll('.bar')
 
-            if (list[index] > list[index + 1]) {
-                let large = list[index];
-                let small = list[index + 1];
+    for (let i = 0; i < columns.length; i++) {
+        for (let index = 0; index < columns.length - i - 1; index++) {
 
-                list[index] = small;
-                list[index + 1] = large;
+            if (parseFloat(columns[index].style.height) > parseFloat(columns[index + 1].style.height)) {
+                let large = columns[index].style.height;
+                let small = columns[index + 1].style.height;
+
+                columns[index].style.height = small;
+                columns[index + 1].style.height = large;
             }
-
-
-            updateColumnNumber()
         }
     }
 }
 
-function rezising() {
-    list = randomList(Math.floor(visualViewport.width / 7));
+function reSizing() {
+    const columns = Math.floor(visualViewport.width / 7);
 
-    let container = document.querySelector('main')
-    container.innerHTML = ''
+    const container = document.querySelector('main');
+    container.innerHTML = '';
 
+    for (let i = 0; i < columns; i++) {
+        const div = document.createElement('div');
 
-    for (let i = 0; i < list.length; i++) {
-        const div = document.createElement('div')
-        div.classList.add('bar')
-        container.append(div)
+        div.classList.add('bar');
+        div.style.height = `${(Math.random() * 50) + 1}vh`;
+        container.append(div);
     }
-    updateColumnNumber()
 }
 
-let list = []
-
-visualViewport.addEventListener('resize', rezising)
-
-rezising();
-
+visualViewport.addEventListener('resize', reSizing);
 document.querySelectorAll('p')[2].addEventListener('click', bubbleSort);
+
+reSizing();
