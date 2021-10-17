@@ -23,7 +23,14 @@ body nav {
     align-content: center;
 }
 
-body nav p:hover {
+body nav button {
+    background-color: #393E46;
+    border: 0;
+    font-weight: bold;
+    color: white;
+}
+
+body nav button:hover {
     color: #FF2E63;
     cursor:pointer;
 }
@@ -41,26 +48,19 @@ main {
     flex-direction: row;
     flex-wrap: nowrap;
     align-content: flex-end;
+    transition: all .5s ease;
 }
 
 .bar {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: flex-end;
-    align-items: center;
-    
     width: 5px;
     margin: 0 1px;
     height: 50vh;
     background-color: #222831;
-    transition: all .5s ease-in-out;
 }
 
 
 
-.bar:hover {
+.bar-moving {
     background-color: #FF2E63;
 }
 
@@ -78,6 +78,7 @@ main {
 .time p {
     font-size: 0.9em;
     font-variant: small-caps;
+    line-height: 2.5em;
 }
 
 
