@@ -9,8 +9,11 @@ body {
     color: #EEEEEE;
 }
 
-
 body nav {
+    background-color: #494f58;
+}
+
+body nav div {
     max-width: 1040px;
     width: 70%;
     height: 10vh;
@@ -24,7 +27,7 @@ body nav {
 }
 
 body nav button {
-    background-color: #393E46;
+    background-color: #494f58;
     border: 0;
     font-weight: bold;
     color: white;
@@ -40,8 +43,18 @@ nav img {
     border-radius: 50%;
 }
 
+.controls {
+    height: 10vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
 main {
-    height: 85vh;
+    height: 75vh;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -52,9 +65,9 @@ main {
 }
 
 .bar {
-    width: 5px;
     margin: 0 1px;
     height: 50vh;
+    width: 5px;
     background-color: #222831;
 }
 
@@ -64,23 +77,38 @@ main {
     background-color: #FF2E63;
 }
 
-.time {
+.footer {
     height: 5vh;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-content: flex-end;
+    align-content: center;
     border-top: 1px solid #EEEEEE;
-}
-
-.time p {
     font-size: 0.9em;
-    font-variant: small-caps;
     line-height: 2.5em;
 }
 
+.footer a, p {
+    margin: 0px 10px;
+}
+
+.footer img {
+    max-width: 20px;
+}
+
+.square {
+    border-radius: 5px;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.footer img:hover {
+    background-color: #FF2E63;
+}
 
 @media screen and (max-width: 575.98px) {
 
