@@ -67,14 +67,20 @@ main {
 .bar {
     margin: 0 1px;
     height: 50vh;
-    width: 5px;
+    width: 15px;
     background-color: #222831;
 }
 
-
-
-.bar-moving {
+.bar-done {
     background-color: #FF2E63;
+}
+
+.bar-check {
+    background-color: #00ADB5;
+}
+
+.bar-min {
+    background-color: #F9ED69
 }
 
 .footer {

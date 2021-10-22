@@ -1,10 +1,10 @@
 let sorting = false
 
-reSizing = () => {
+const reSizing = () => {
     sorting = false;
     stepCounter(0);
     document.querySelector('#timer').innerHTML = '00:00';
-    const columns = Math.floor(visualViewport.width / 7);
+    const columns = Math.floor(visualViewport.width / 17);
     const container = document.querySelector('main');
 
     container.innerHTML = '';
@@ -17,35 +17,65 @@ reSizing = () => {
         container.append(div);
     }
 
-    const columnAmount = document.querySelector('#column-amount');
-    columnAmount.innerHTML = columns;
+    document.querySelector('#column-amount').innerHTML = columns;
 }
 
-addCompletedClass = async (index) => {
-    let columns = document.querySelectorAll('.bar');
-    columns[index].classList.add('bar-moving');
-}
-
-removeCompletedClass = async (index) => {
-    let columns = document.querySelectorAll('.bar');
-    columns[index].classList.remove('bar-moving');
-}
-
-codeWait = async () => {
+const codeWait = async () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve()
-        }, 5)
+        }, 100)
     })
 }
 
-stepCounter = (step) => {
+const addSortedColor = async (index) => {
+    document.querySelectorAll('.bar')[index].classList.add('bar-done');
+}
+
+const addCheckColor = async (index) => {
+    document.querySelectorAll('.bar')[index].classList.add('bar-check');
+}
+
+const addMinColor = async (index) => {
+    document.querySelectorAll('.bar')[index].classList.add('bar-min');
+}
+
+const removeCheckColor = async (index) => {
+    document.querySelectorAll('.bar')[index].classList.remove('bar-check');
+}
+
+const removeMinColor = async (index) => {
+    document.querySelectorAll('.bar')[index].classList.remove('bar-min');
+}
+
+const checkSize = async (index1, index2) => {
+    let value1 = parseFloat(document.querySelectorAll('.bar')[index1].style.height);
+    let value2 = parseFloat(document.querySelectorAll('.bar')[index2].style.height);
+
+    await codeWait()
+
+    if (value1 < value2) {
+        return true
+    }
+    return false
+}
+
+const changeElement = async (index1, index2) => {
+    const col1 = document.querySelectorAll('.bar')[index1];
+    const col2 = document.querySelectorAll('.bar')[index2];
+    await codeWait()
+    document.querySelectorAll('.bar')[index1].insertAdjacentElement('beforebegin', col2);
+    await codeWait()
+    document.querySelectorAll('.bar')[index2].insertAdjacentElement('beforebegin', col1);
+}
+
+const stepCounter = (step) => {
     document.querySelector('#steps').innerHTML = `${step}`
 }
 
-setTime = (time) => {
-    let minutes = parseInt(time / 60, 10);
-    let seconds = parseInt(time % 60, 10);
+const setTime = (totalSeconds) => {
+    let minutes = parseInt(totalSeconds / 60, 10);
+    let seconds = parseInt(totalSeconds % 60, 10);
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
     document.querySelector('#timer').innerHTML = `${minutes}:${seconds}`
@@ -58,28 +88,28 @@ document.querySelector('#bubbleSort').addEventListener('click', async () => {
     if (!sorting) {
         sorting = true;
 
-        let step = 0, time = 1;
-        const columnLengh = document.querySelectorAll('.bar').length;
+        let step = 1, time = 1;
+        const n = document.querySelectorAll('.bar').length;
         let timer = setInterval(() => setTime(time++), 1000);
 
-        for (let i = 0; i < columnLengh; i++) {
-            for (let index = 0; index < columnLengh - i - 1; index++) {
+        for (let i = 0; i < n; i++) {
+            for (let index = 0; index < n - i - 1; index++) {
                 if (!sorting) {
                     clearInterval(timer);
                     return null;
                 }
 
                 stepCounter(step++)
-                let columns = document.querySelectorAll('.bar');
-
-                if (parseFloat(columns[index].style.height) > parseFloat(columns[index + 1].style.height)) {
+                await addCheckColor(index)
+                await addCheckColor(index + 1)
+                if (await checkSize(index + 1, index)) {
                     await codeWait();
-                    await addCompletedClass(index)
-                    columns[index].insertAdjacentElement('beforebegin', columns[index + 1]);
+                    await changeElement(index + 1, index);
                 }
-                await removeCompletedClass(index)
+                await removeCheckColor(index)
+                await removeCheckColor(index + 1)
             }
-            await addCompletedClass(columnLengh - 1 - i)
+            await addSortedColor(n - 1 - i)
         }
         sorting = false;
         clearInterval(timer);
@@ -90,27 +120,70 @@ document.querySelector('#insertionSort').addEventListener('click', async () => {
     if (!sorting) {
         sorting = true
 
-        let step = 0, time = 1;
+        let step = 1, time = 1;
         let timer = setInterval(() => setTime(time++), 1000);
-        let column = document.querySelectorAll('.bar');
+        let n = document.querySelectorAll('.bar').length;
 
-        for (let i = 0; i < column.length - 1; i++) {
+        for (let i = 0; i < n - 1; i++) {
             let j = i;
 
-            while (j >= 0 && parseFloat(column[j].style.height) > parseFloat(column[j + 1].style.height)) {
+            while (j >= 0 && await checkSize(j + 1, j)) {
                 if (!sorting) {
                     clearInterval(timer);
                     return null;
                 }
 
                 stepCounter(step++)
+                await addCheckColor(j)
+                await addCheckColor(j + 1)
                 await codeWait();
-                await addCompletedClass(j)
-                await addCompletedClass(j + 1)
-                column[j].insertAdjacentElement('beforebegin', column[j + 1]);
+                await changeElement(j, j + 1)
+                await removeCheckColor(j)
+                await removeCheckColor(j + 1)
                 j -= 1;
-                column = document.querySelectorAll('.bar');
             }
+            // await addSortedColor(i)
+        }
+        sorting = false;
+        clearInterval(timer);
+    }
+});
+
+document.querySelector('#selectionSort').addEventListener('click', async () => {
+
+    if (!sorting) {
+        sorting = true
+
+        let step = 1, time = 1;
+        let timer = setInterval(() => setTime(time++), 1000);
+        let min_idx, column;
+        let n = document.querySelectorAll('.bar').length;
+
+        for (let i = 0; i < n; i++) {
+            min_idx = i;
+
+            for (let j = i + 1; j < n; j++) {
+                if (!sorting) {
+                    clearInterval(timer);
+                    return null;
+                }
+
+                await addMinColor(min_idx);
+                await addCheckColor(j);
+                await codeWait();
+
+                if (await checkSize(j, min_idx)) {
+                    await removeMinColor(min_idx)
+                    min_idx = j;
+                }
+                await removeCheckColor(j);
+                await codeWait();
+
+                stepCounter(step++)
+            }
+            await removeMinColor(min_idx)
+            await changeElement(i, min_idx)
+            await addSortedColor(i)
         }
         sorting = false;
         clearInterval(timer);
