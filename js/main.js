@@ -4,7 +4,7 @@ const reSizing = () => {
     sorting = false;
     stepCounter(0);
     document.querySelector('#timer').innerHTML = '00:00';
-    const columns = Math.floor(visualViewport.width / 17);
+    const columns = Math.floor(visualViewport.width / 37);
     const container = document.querySelector('main');
 
     container.innerHTML = '';
