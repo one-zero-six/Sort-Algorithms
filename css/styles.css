@@ -83,6 +83,14 @@ main {
     background-color: #F9ED69
 }
 
+.bar-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.65em;
+    font-weight: bold;
+}
+
 .footer {
     height: 5vh;
     display: flex;
