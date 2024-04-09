@@ -1,5 +1,7 @@
 let sorting = false;
 
+const currentYear = new Date()
+
 const reSizing = () => {
     sorting = false;
     stepCounter(0);
@@ -33,7 +35,7 @@ const codeWait = async () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 100)
+        }, 50)
     })
 }
 
@@ -204,5 +206,7 @@ document.querySelector('#bubbleSort').addEventListener('click', async () => {
         clearInterval(timer);
     }
 });
+
+document.querySelector('#copyrightyear').after(`${currentYear.getFullYear()} Edel Perez`);
 
 reSizing();
