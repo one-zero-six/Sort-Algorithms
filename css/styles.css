@@ -1,16 +1,16 @@
 body {
-    background-color: #393E46;
+    background-color: #F7E7DC;
     font-size: 1em;
     font-weight: 400;
     line-height: 1.85714286em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Open Sans', sans-serif;
-    color: #EEEEEE;
+    color: #758694;
 }
 
 body nav {
-    background-color: #494f58;
+    background-color: #ECCEAE;
 }
 
 body nav div {
@@ -27,15 +27,17 @@ body nav div {
 }
 
 body nav button {
-    background-color: #494f58;
-    border: 0;
+    background-color: #ECCEAE;
+    padding: 0.5rem;
     font-weight: bold;
-    color: white;
+    color: #FFF8F3;
+    border: none;
 }
 
 body nav button:hover {
-    color: #FF2E63;
+    color: #ff2e629e;
     cursor: pointer;
+    border-bottom: 1px solid #FFF8F3;
 }
 
 nav img {
@@ -49,8 +51,20 @@ nav img {
     justify-content: space-evenly;
     align-items: center;
     align-content: center;
+}
+
+.controls div {
+    max-width: 60%;
+    background-color: #FFF8F3;
+    border-radius: 1.25rem;
+    padding: 0.25rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
     flex-direction: row;
     flex-wrap: nowrap;
+
 }
 
 main {
@@ -68,7 +82,7 @@ main {
     margin: 0 1px;
     height: 50vh;
     width: 35px;
-    background-color: #222831;
+    background-color: #FFF8F3;
 }
 
 .bar-done {
@@ -99,30 +113,46 @@ main {
     flex-direction: row;
     flex-wrap: nowrap;
     align-content: center;
-    border-top: 1px solid #EEEEEE;
+    border-top: 1px solid #ECCEAE;
     font-size: 0.9em;
     line-height: 2.5em;
 }
 
 .footer a,
-p {
+p,
+svg {
     margin: 0px 10px;
+    display: flex;
+    justify-content: center;
+    color: #758694;
 }
 
-.footer img {
-    max-width: 20px;
+.hovertext {
+    position: relative;
 }
 
-.square {
-    border-radius: 5px;
+.hovertext:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: 140px;
+    font-size: 0.75rem;
+    line-height: 1.1rem;
+    color: #758694;
+    text-align: right;
+    transition: opacity 0.25s ease-in-out;
+    position: absolute;
+    z-index: 1;
+    left: 0;
 }
 
-.round {
-    border-radius: 50%;
+.hovertext:hover:before {
+    opacity: 1;
+    visibility: visible;
 }
 
-.github img:hover {
-    background-color: #ff2e629e;
+.hovertext:hover .github {
+    color: #ff2e629e;
 }
 
 @media screen and (max-width: 575.98px) {}
