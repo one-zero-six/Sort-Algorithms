@@ -1,6 +1,5 @@
 let sorting = false;
-
-const currentYear = new Date()
+const currentYear = new Date();
 
 const reSizing = () => {
     sorting = false;
@@ -88,54 +87,61 @@ const stepCounter = (step) => {
 const setTime = (totalSeconds) => {
     let minutes = parseInt(totalSeconds / 60, 10);
     let seconds = parseInt(totalSeconds % 60, 10);
+
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
+
     document.querySelector('#timer').innerHTML = `${minutes}:${seconds}`;
 }
 
-visualViewport.addEventListener('resize', reSizing);
 
-document.querySelector('#insertionSort').addEventListener('click', async () => {
-    if (!sorting) {
-        sorting = true;
 
-        let step = 1, time = 1;
-        let timer = setInterval(() => setTime(time++), 1000);
-        let n = document.querySelectorAll('.bar').length;
-
-        for (let i = 0; i < n - 1; i++) {
-            let j = i;
-
-            while (j >= 0 && await checkSize(j + 1, j)) {
-                if (!sorting) {
-                    clearInterval(timer);
-                    return null;
-                }
-                stepCounter(step++);
-                await addCheckColor(j);
-                await addCheckColor(j + 1);
-                await codeWait();
-                await changeElement(j, j + 1);
-                await removeCheckColor(j);
-                await removeCheckColor(j + 1);
-                if (await checkSize(i, j)) {
-                    await addSortedColor(j)
-                }
-                j -= 1;
-            }
-        }
-
-        for (let i = 0; i < n; i++) {
-            await codeWait()
-            await addSortedColor(i)
-        }
-        sorting = false;
-        clearInterval(timer);
+const insertionSort = async () => {
+    if (sorting) {
+        reSizing()
     }
-});
 
-document.querySelector('#selectionSort').addEventListener('click', async () => {
+    sorting = true;
 
+    document.querySelector('#insertionSort').classList.add('selected-algorithm')
+
+    let step = 1;
+    let time = 1;
+    let timer = setInterval(() => setTime(time++), 1000);
+    let n = document.querySelectorAll('.bar').length;
+
+    for (let i = 0; i < n - 1; i++) {
+        let j = i;
+
+        while (j >= 0 && await checkSize(j + 1, j)) {
+            if (!sorting) {
+                clearInterval(timer);
+                return undefined;
+            }
+            stepCounter(step++);
+            await addCheckColor(j);
+            await addCheckColor(j + 1);
+            await codeWait();
+            await changeElement(j, j + 1);
+            await removeCheckColor(j);
+            await removeCheckColor(j + 1);
+            if (await checkSize(i, j)) {
+                await addSortedColor(j)
+            }
+            j -= 1;
+        }
+    }
+
+    for (let i = 0; i < n; i++) {
+        await codeWait()
+        await addSortedColor(i)
+    }
+
+    sorting = false;
+    clearInterval(timer);
+};
+
+const selectionSort = async () => {
     if (!sorting) {
         sorting = true;
 
@@ -173,10 +179,9 @@ document.querySelector('#selectionSort').addEventListener('click', async () => {
         sorting = false;
         clearInterval(timer);
     }
-});
+};
 
-document.querySelector('#bubbleSort').addEventListener('click', async () => {
-
+const bubbleSort = async () => {
     if (!sorting) {
         sorting = true;
 
@@ -205,8 +210,15 @@ document.querySelector('#bubbleSort').addEventListener('click', async () => {
         sorting = false;
         clearInterval(timer);
     }
-});
+};
+
+
+visualViewport.addEventListener('resize', reSizing);
+
+document.querySelector('#insertionSort').addEventListener('click', insertionSort);
+document.querySelector('#selectionSort').addEventListener('click', selectionSort);
+document.querySelector('#bubbleSort').addEventListener('click', bubbleSort);
 
 document.querySelector('#copyrightyear').after(`${currentYear.getFullYear()} Edel Perez`);
 
-reSizing();
+// reSizing();
